@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>D.Nova — Automation Engineer</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Custom styles to complement Tailwind */
+      html {
+        scroll-behavior: smooth;
+        /* Disable snap scrolling on mobile for a better experience */
+        scroll-snap-type: none;
+        overscroll-behavior-y: none; /* Prevents "pull-to-refresh" on mobile */
+      }
+      /* Enable snap scrolling on larger screens */
+      @media (min-width: 768px) {
+        html {
+          scroll-snap-type: y mandatory;
+        }
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #f9f9f9; /* Set body background to light gray */
+        color: #1a1a1a;
+      }
+
+      /* This ensures each section is a snap point and adds a top margin for the fixed header */
+      section {
+        scroll-snap-align: start;
+        scroll-margin-top: 5rem; /* Offset for the fixed header */
+      }
+
+      /* Subtle background pattern for light sections */
+      .light-section-bg {
+        background-image: radial-gradient(#e5e7eb 0.5px, transparent 0.5px);
+        background-size: 15px 15px;
+      }
+
+      /* Vertical text styling */
+      .vertical-text {
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+        white-space: nowrap;
+      }
+
+      /* Custom styling for the main heading for precise font weight and spacing */
+      h1 {
+        font-weight: 300; /* Light font weight for the "Hello" */
+        letter-spacing: -0.05em; /* Tighter letter spacing */
+      }
+
+      /* --- Header Styling --- */
+      #main-header {
+        transition: all 0.3s ease-in-out;
+      }
+      /* Glassmorphism effect for the header */
+      .glassmorphism-header {
+        background: rgba(
+          249,
+          249,
+          249,
+          0.8
+        ); /* Semi-transparent light background */
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(229, 231, 235, 0.5); /* Faint border */
+      }
+      #main-header.header-dark .glassmorphism-header {
+        background: rgba(
+          26,
+          26,
+          26,
+          0.7
+        ); /* Semi-transparent dark background */
+        border-bottom: 1px solid rgba(55, 65, 81, 0.5);
+      }
+
+      /* Noise texture for glassmorphism */
+      .noise-texture::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        opacity: 0.03;
+        pointer-events: none;
+      }
+
+      /* Default (light) theme for header elements */
+      #main-header .nav-link {
+        color: #6b7280;
+        transition: all 0.3s ease;
+      }
+      #main-header .nav-link:hover {
+        transform: scale(1.05);
+      }
+      #main-header .nav-link.active {
+        color: #1a1a1a;
+        font-weight: 500;
+      }
+
+      /* Dark theme for header elements */
+      #main-header.header-dark .nav-link {
+        color: #d1d5db;
+      }
+      #main-header.header-dark .nav-link.active {
+        color: #fff;
+        font-weight: 500;
+      }
+
+      /* Interactive Card Style */
+      .service-card {
+        transition: all 0.3s ease-in-out;
+      }
+      .service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.07),
+          0 8px 10px -6px rgba(0, 0, 0, 0.07);
+      }
+
+      .process-card {
+        box-shadow: 0 4px 15px -5px rgba(0, 0, 0, 0.05);
+      }
+    </style>
+  </head>
+  <body class="min-h-screen">
+    <!-- Left Vertical Sidebar -->
+    <aside
+      class="w-12 md:w-16 border-r border-gray-200 flex flex-col items-center justify-between py-8 fixed top-0 left-0 h-full z-30 bg-white"
+    >
+      <div
+        class="vertical-text text-xs sm:text-sm font-medium tracking-widest uppercase text-gray-400"
+      >
+        Automation Engineer
+      </div>
+
+      <!-- Scroll Text Indicator Container -->
+      <div class="relative">
+        <a
+          id="scroll-down-indicator"
+          href="#services"
+          class="block p-4 vertical-text text-xs sm:text-sm text-gray-500 tracking-widest uppercase"
+        >
+          <span>Scroll</span>
+        </a>
+        <a
+          id="back-to-top-indicator"
+          href="#hero"
+          class="hidden p-4 vertical-text text-xs sm:text-sm text-gray-500 tracking-widest uppercase"
+        >
+          <span>Top</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Header and Main Content Wrapper -->
+    <div class="ml-12 md:ml-16">
+      <!-- Header Navigation -->
+      <header
+        id="main-header"
+        class="fixed top-0 right-0 z-20 w-[calc(100%-3rem)] md:w-[calc(100%-4rem)]"
+      >
+        <div
+          class="relative flex justify-center items-center p-4 md:p-8 glassmorphism-header noise-texture"
+        >
+          <!-- Centered Nav -->
+          <nav
+            class="flex items-center space-x-4 md:space-x-8 text-sm font-medium"
+          >
+            <a href="#hero" class="nav-link">Home</a>
+            <a href="#services" class="nav-link">Services</a>
+            <a href="#process" class="nav-link">Process</a>
+            <a href="#contact" class="nav-link">Contact</a>
+          </nav>
+        </div>
+      </header>
+
+      <!-- Main Content Area -->
+      <main>
+        <!-- Hero Section -->
+        <section
+          id="hero"
+          class="flex items-center justify-center min-h-screen md:h-screen light-section-bg bg-[#f9f9f9]"
+        >
+          <div class="w-full p-8 text-center relative z-10">
+            <div class="flex justify-center space-x-8 md:space-x-12 mb-8">
+              <div>
+                <p class="text-3xl md:text-4xl font-medium">+10k</p>
+                <p class="text-xs md:text-sm text-gray-500">Hours Saved</p>
+              </div>
+              <div>
+                <p class="text-3xl md:text-4xl font-medium">+300</p>
+                <p class="text-xs md:text-sm text-gray-500">
+                  Processes Automated
+                </p>
+              </div>
+            </div>
+            <h1
+              class="text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] leading-none text-black"
+            >
+              Hello
+            </h1>
+            <p class="text-base md:text-lg text-gray-600 mt-4 md:ml-2">
+              — It's D.Nova, your automation wizard.
+            </p>
+          </div>
+        </section>
+
+        <!-- Services Section -->
+        <section
+          id="services"
+          class="min-h-screen md:h-screen bg-white px-8 md:px-16 lg:px-24 flex items-center justify-center relative z-10 py-24 md:py-0"
+        >
+          <div class="max-w-7xl mx-auto">
+            <h2
+              class="text-4xl md:text-5xl lg:text-6xl font-semibold mb-4 text-center md:text-left"
+            >
+              Services
+            </h2>
+            <p
+              class="text-base md:text-lg text-gray-600 max-w-3xl mb-12 md:mb-16 text-center md:text-left"
+            >
+              I help businesses save time and reduce errors by automating
+              repetitive tasks. Here's how I can help:
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div
+                class="service-card border border-gray-200 p-8 rounded-lg bg-white"
+              >
+                <h3 class="text-xl md:text-2xl font-semibold mb-3">
+                  API Integration
+                </h3>
+                <p class="text-gray-600 text-sm md:text-base">
+                  Connecting your different software tools so they can talk to
+                  each other seamlessly, eliminating manual data entry.
+                </p>
+              </div>
+              <div
+                class="service-card border border-gray-200 p-8 rounded-lg bg-white"
+              >
+                <h3 class="text-xl md:text-2xl font-semibold mb-3">
+                  Data Scraping
+                </h3>
+                <p class="text-gray-600 text-sm md:text-base">
+                  Automating the process of gathering information from websites
+                  and organizing it for your needs.
+                </p>
+              </div>
+              <div
+                class="service-card border border-gray-200 p-8 rounded-lg bg-white"
+              >
+                <h3 class="text-xl md:text-2xl font-semibold mb-3">
+                  Custom Bots
+                </h3>
+                <p class="text-gray-600 text-sm md:text-base">
+                  Building custom bots to handle your unique business processes,
+                  from generating reports to managing customer data.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Process Section -->
+        <section
+          id="process"
+          class="min-h-screen md:h-screen px-8 md:px-16 lg:px-24 flex items-center justify-center light-section-bg bg-[#f9f9f9] relative z-10 py-24 md:py-0"
+        >
+          <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-semibold mb-4">
+              My Process
+            </h2>
+            <p
+              class="text-base md:text-lg text-gray-600 max-w-3xl mx-auto mb-16 md:mb-20"
+            >
+              A simple, transparent process to ensure we build the right
+              solution for you.
+            </p>
+            <div
+              class="relative flex flex-col md:flex-row items-center justify-between w-full max-w-5xl mx-auto space-y-8 md:space-y-0"
+            >
+              <!-- Connecting Line -->
+              <div
+                class="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-gray-200 -translate-y-1/2"
+              ></div>
+
+              <!-- Step 1 -->
+              <div
+                class="process-card relative z-10 text-left bg-gray-100 p-6 rounded-lg border border-gray-200 w-full md:w-auto"
+              >
+                <p class="text-3xl md:text-4xl font-bold text-gray-300 mb-2">
+                  01
+                </p>
+                <h3 class="text-lg md:text-xl font-semibold mb-2">Discovery</h3>
+                <p class="text-gray-600 text-sm">
+                  We'll identify the best opportunities for automation.
+                </p>
+              </div>
+              <!-- Step 2 -->
+              <div
+                class="process-card relative z-10 text-left bg-gray-100 p-6 rounded-lg border border-gray-200 w-full md:w-auto"
+              >
+                <p class="text-3xl md:text-4xl font-bold text-gray-300 mb-2">
+                  02
+                </p>
+                <h3 class="text-lg md:text-xl font-semibold mb-2">
+                  Development
+                </h3>
+                <p class="text-gray-600 text-sm">
+                  I'll build and rigorously test the automation solution.
+                </p>
+              </div>
+              <!-- Step 3 -->
+              <div
+                class="process-card relative z-10 text-left bg-gray-100 p-6 rounded-lg border border-gray-200 w-full md:w-auto"
+              >
+                <p class="text-3xl md:text-4xl font-bold text-gray-300 mb-2">
+                  03
+                </p>
+                <h3 class="text-lg md:text-xl font-semibold mb-2">
+                  Deployment
+                </h3>
+                <p class="text-gray-600 text-sm">
+                  I'll deploy the solution and provide ongoing support.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section
+          id="contact"
+          class="h-screen bg-black text-white px-8 md:px-16 lg:px-24 flex items-center justify-center relative"
+        >
+          <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-semibold mb-4">
+              Let's Automate It
+            </h2>
+            <p
+              class="text-base md:text-lg text-gray-300 max-w-3xl mx-auto mb-12"
+            >
+              Ready to save time and streamline your business? Send me a message
+              to get started.
+            </p>
+            <a
+              href="mailto:hello@dnova.com"
+              class="inline-block bg-white text-black text-lg font-medium px-8 py-3 md:px-10 md:py-4 rounded-full hover:bg-gray-200 transition-colors"
+            >
+              hello@dnova.com
+            </a>
+          </div>
+          <footer
+            class="absolute bottom-8 left-0 right-0 text-center text-xs text-gray-500 px-4"
+          >
+            <p>&copy; 2025 D.Nova. All rights reserved.</p>
+          </footer>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".nav-link");
+        const header = document.getElementById("main-header");
+        const scrollDownIndicator = document.getElementById(
+          "scroll-down-indicator"
+        );
+        const backToTopIndicator = document.getElementById(
+          "back-to-top-indicator"
+        );
+        const sectionArray = Array.from(sections);
+
+        const scrambleAnimation = (element) => {
+          const originalText = element.dataset.originalText;
+          if (!originalText || element.isAnimating) return;
+
+          element.isAnimating = true;
+          const chars = "!<>-_\\/[$]{@}—=(%)&+*^?#0123456789";
+          let iteration = 0;
+
+          clearInterval(element.interval);
+
+          element.interval = setInterval(() => {
+            // Glitch effect by randomly showing original or scrambled text
+            const glitchText = originalText
+              .split("")
+              .map((letter, index) => {
+                if (index < iteration) {
+                  return originalText[index];
+                }
+                return chars[Math.floor(Math.random() * chars.length)];
+              })
+              .join("");
+
+            if (Math.random() > 0.9) {
+              element.innerText = originalText;
+            } else {
+              element.innerText = glitchText;
+            }
+
+            if (iteration >= originalText.length) {
+              clearInterval(element.interval);
+              element.innerText = originalText;
+              element.isAnimating = false;
+            }
+
+            iteration += 1 / 2;
+          }, 40);
+        };
+
+        let wasLastSectionVisible = false;
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const currentSectionId = entry.target.id;
+
+                const activeLink = document.querySelector(
+                  `.nav-link[href="#${currentSectionId}"]`
+                );
+
+                // Update active class for all links and animate the new active one
+                navLinks.forEach((link) => {
+                  const isActive = link === activeLink;
+                  if (isActive && !link.classList.contains("active")) {
+                    scrambleAnimation(link);
+                  }
+                  link.classList.toggle("active", isActive);
+                });
+
+                // Change header color for the dark contact section
+                const isDarkSection = currentSectionId === "contact";
+                header.classList.toggle("header-dark", isDarkSection);
+
+                // Toggle scroll indicators and update link
+                const isLastSection = currentSectionId === "contact";
+                if (isLastSection !== wasLastSectionVisible) {
+                  if (isLastSection) {
+                    scrambleAnimation(backToTopIndicator.querySelector("span"));
+                  } else {
+                    scrambleAnimation(
+                      scrollDownIndicator.querySelector("span")
+                    );
+                  }
+                }
+                wasLastSectionVisible = isLastSection;
+
+                scrollDownIndicator.style.display = isLastSection
+                  ? "none"
+                  : "block";
+                backToTopIndicator.style.display = isLastSection
+                  ? "block"
+                  : "none";
+
+                if (!isLastSection) {
+                  const currentIndex = sectionArray.findIndex(
+                    (sec) => sec.id === currentSectionId
+                  );
+                  const nextSection = sectionArray[currentIndex + 1];
+                  if (nextSection) {
+                    scrollDownIndicator.href = `#${nextSection.id}`;
+                  }
+                }
+              }
+            });
+          },
+          { threshold: 0.5 }
+        ); // Lowered threshold for better mobile detection
+
+        sections.forEach((section) => {
+          observer.observe(section);
+        });
+
+        // Make nav links just scroll, the observer will handle the animation
+        navLinks.forEach((link) => {
+          link.dataset.originalText = link.innerText;
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+            const targetId = e.target.getAttribute("href");
+            document.querySelector(targetId).scrollIntoView();
+          });
+        });
+
+        // Add original text data to scroll indicators and add click handlers
+        scrollDownIndicator.querySelector("span").dataset.originalText =
+          "Scroll";
+        backToTopIndicator.querySelector("span").dataset.originalText = "Top";
+
+        [scrollDownIndicator, backToTopIndicator].forEach((indicator) => {
+          indicator.addEventListener("click", (e) => {
+            e.preventDefault();
+            const targetId = e.currentTarget.getAttribute("href");
+            document.querySelector(targetId).scrollIntoView();
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
