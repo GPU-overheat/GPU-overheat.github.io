@@ -11,7 +11,7 @@ const ContactPage: React.FC = () => {
       <div>
         <p className="my-6">
           You can{" "}
-          <span className="text-[#000080]" onClick={handleClick}>
+          <span className="text-[#000080] cursor-pointer" onClick={handleClick}>
             {" "}
             <AnimatePresence mode="wait">
               <motion.span
