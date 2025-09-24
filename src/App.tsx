@@ -93,7 +93,7 @@ const Home: React.FC = () => {
   const currentActivity = currentList[activityIndex];
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 text-center">
+    <div className="flex flex-col items-center justify-center px-4 text-center">
       <div className="mb-6 -mt-4">
         <AnimatePresence mode="wait">
           <motion.h1

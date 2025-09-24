@@ -4,12 +4,12 @@ import FooBar from "./components/FooBar.tsx";
 
 export default function RootLayout() {
   return (
-    <div className="mih-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="max-w-4xl mx-auto p-4 flex-grow h-screen">
+      <main className="max-w-4xl mx-auto p-4 flex-grow flex flex-col justify-center">
         <Outlet />
       </main>
-        <FooBar />
+      <FooBar />
     </div>
   );
 }
