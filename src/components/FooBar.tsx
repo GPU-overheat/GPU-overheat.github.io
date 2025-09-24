@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router";
 
 const year = new Date().getFullYear();
 const githubLink = "https://github.com/GPU-overheat";
@@ -18,7 +19,10 @@ const Footer: React.FC = () => {
             >
               GPU-overheat
             </a>
-            . All rights reserved.
+            . All rights reserved.{" "}
+            <Link to="/privacy" className="hover:underline">
+              Privacy Policy
+            </Link>
           </p>
         </div>
       </div>

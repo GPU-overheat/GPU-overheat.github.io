@@ -7,6 +7,7 @@ import { RouterProvider } from "react-router/dom";
 import AboutPage from "./AboutPage.tsx";
 import ContactPage from "./ContactPage.tsx";
 import RootLayout from "./RootLayout.tsx";
+import PrivacyPolicyPage from "./components/PrivacyPolicyPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "contact",
         Component: ContactPage,
+      },
+      {
+        path: "privacy",
+        Component: PrivacyPolicyPage,
       },
     ],
   },
