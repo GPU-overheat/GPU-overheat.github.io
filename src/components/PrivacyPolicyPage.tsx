@@ -57,7 +57,7 @@ const PrivacyPolicyPage: React.FC = () => {
       </p>
       <p>
         If you have any questions about this Privacy Policy, be sure that i'm
-        not using the data this is just a show off that i link google analytics with a website.
+        not using the data this is just a show off that i can link google analytics to a website.
       </p>
     </div>
   );
