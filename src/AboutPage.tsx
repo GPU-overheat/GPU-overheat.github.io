@@ -103,8 +103,10 @@ const AboutPage = () => {
           proficient in developing both front-end and back-end solutions,
           utilizing a range of tools from specialized libraries like Redux,
           Axios, and Framer Motion, to comprehensive frameworks such as Next.js
-          and Express.js. My back-end skills also extend to Python, where I have
-          experience with Django and Flask.
+          and Express.js. To manage data effectively, I'm experienced with both
+          SQL such as MySQL and NoSQL such as MongoDB databases. My back-end
+          skills also extend to Python, where I have experience with Django and
+          Flask.
         </p>
       </div>
       <div className={paraStyle}>
