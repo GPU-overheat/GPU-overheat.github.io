@@ -8,6 +8,7 @@ import AboutPage from "./AboutPage.tsx";
 import ContactPage from "./ContactPage.tsx";
 import RootLayout from "./RootLayout.tsx";
 import PrivacyPolicyPage from "./components/PrivacyPolicyPage.tsx";
+import OfflineBoundary from "./OfflineBoundary.tsx";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <OfflineBoundary>
+      <RouterProvider router={router} />
+    </OfflineBoundary>
   </StrictMode>
 );
